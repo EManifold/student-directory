@@ -1,6 +1,6 @@
 require 'colorize'
 
-@students = [{name: 'John', cohort: 'October', hobby: 'Fishing', height: "5'11''"}, {name: 'Alison', cohort: 'September', hobby: 'Bowling', height: "5'5''"}, {name: 'Raymond', cohort: 'September', hobby: 'Piano', height: "6'1''"}, {name: 'Julie', cohort: 'October', hobby: 'Football', height: "5'10''"}] # an empty array accessible to all methods
+@students = []
 
 def print_menu
   puts "Please select an option".white
@@ -105,12 +105,8 @@ def add_info_to_student
         student[:height] = height
       end
     end
-
     puts "Their information has been added".light_green
-
   end
-
-
 end
 
 def save_students
@@ -146,5 +142,4 @@ def try_load_students
   end
 end
 
-try_load_students
 interactive_menu
