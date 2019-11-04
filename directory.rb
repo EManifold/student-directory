@@ -8,6 +8,7 @@ def print_menu
   puts "2. Show the students".white
   puts "3. Input a new student".white
   puts "4. Add more details to a student".white
+  puts "5. Show students in a specific cohort".white
   puts "9. Exit".white # 9 because we'll be adding more items
 end
 
@@ -29,6 +30,8 @@ def process(selection)
     input_students
   when "4"
     add_info_to_student
+  when "5"
+    separate_by_cohort
   when "9"
     save_students
     exit # this will cause the program to terminate
@@ -67,13 +70,13 @@ def print_header
   puts "=".center(100, '=').light_cyan
   puts "The students of Villains Academy".center(100).light_cyan
   puts "=".center(100, '=').light_cyan
+  puts "  ".center(10).light_white + "Name".center(15).light_white + "Cohort".center(20).light_white + "Hobby".center(15).light_white + "Height".center(15).light_white + "Student ID".center(15).light_white
+  puts '-'.center(100, '-').light_white
 end
 
 def print_student_list
-  puts "  ".center(10).light_white + "Name".center(15).light_white + "Cohort".center(20).light_white + "Hobby".center(15).light_white + "Height".center(15).light_white + "Student ID".center(15).light_white
-  puts '-'.center(100, '-').light_white
   @students.each do |student|
-    puts "#{@students.index(student) + 1} ||".center(10).light_magenta + "#{student[:name]}".center(15).light_magenta + "#{student[:cohort]}".center(20).light_magenta + "#{student[:hobby]}".center(15).light_magenta + "#{student[:height]}".center(15).light_magenta + "#{student.object_id}".center(15).light_magenta
+      puts "#{@students.index(student) + 1} ||".center(10).light_magenta + "#{student[:name]}".center(15).light_magenta + "#{student[:cohort]}".center(20).light_magenta + "#{student[:hobby]}".center(15).light_magenta + "#{student[:height]}".center(15).light_magenta + "#{student.object_id}".center(15).light_magenta
   end
 end
 
@@ -109,6 +112,18 @@ def add_info_to_student
     end
     puts "Their information has been added".light_green
   end
+end
+
+def separate_by_cohort
+  puts "Please enter the cohort you would like to view"
+  chosen_cohort = STDIN.gets.chomp
+  print_header
+    @students.map do |student|
+      if student[:cohort] == chosen_cohort.to_sym
+        puts "#{@students.index(student) + 1} ||".center(10).light_magenta + "#{student[:name]}".center(15).light_magenta + "#{student[:cohort]}".center(20).light_magenta + "#{student[:hobby]}".center(15).light_magenta + "#{student[:height]}".center(15).light_magenta + "#{student.object_id}".center(15).light_magenta
+      end
+    end
+  print_footer
 end
 
 def save_students
