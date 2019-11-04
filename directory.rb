@@ -31,7 +31,7 @@ def process(selection)
   when "4"
     add_info_to_student
   when "5"
-    separate_by_cohort
+    view_by_cohort
   when "9"
     save_students
     exit # this will cause the program to terminate
@@ -48,6 +48,35 @@ def input_students
 
   puts "Please enter their cohort month"
   cohort = STDIN.gets.chomp
+
+  #Dealing with shortened months
+  case cohort
+  when 'jan'
+    cohort = 'January'
+  when 'feb'
+    cohort = 'February'
+  when 'mar'
+    cohort = 'March'
+  when 'apr'
+    cohort = 'April'
+  when 'may'
+    cohort = 'May'
+  when 'june'
+    cohort = 'June'
+  when 'july'
+    cohort = 'July'
+  when 'aug'
+    cohort = 'August'
+  when 'sept'
+    cohort = 'September'
+  when 'oct'
+    cohort = 'October'
+  when 'nov'
+    cohort = 'November'
+  when 'dec'
+    cohort = 'December'
+  end
+
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
@@ -114,9 +143,10 @@ def add_info_to_student
   end
 end
 
-def separate_by_cohort
+def view_by_cohort
   puts "Please enter the cohort you would like to view"
   chosen_cohort = STDIN.gets.chomp
+
   print_header
     @students.map do |student|
       if student[:cohort] == chosen_cohort.to_sym
@@ -124,6 +154,7 @@ def separate_by_cohort
       end
     end
   print_footer
+
 end
 
 def save_students
