@@ -9,6 +9,7 @@ def print_menu
   puts "3. Input a new student".white
   puts "4. Add more details to a student".white
   puts "5. Show students in a specific cohort".white
+  puts "6. Delete a student from the list".white
   puts "9. Exit".white # 9 because we'll be adding more items
 end
 
@@ -32,6 +33,8 @@ def process(selection)
     add_info_to_student
   when "5"
     view_by_cohort
+  when "6"
+    delete_a_student
   when "9"
     save_students
     exit # this will cause the program to terminate
@@ -144,7 +147,7 @@ def add_info_to_student
 end
 
 def view_by_cohort
-  puts "Please enter the cohort you would like to view"
+  puts "Please enter the cohort you would like to view".light_yellow
   chosen_cohort = STDIN.gets.chomp
 
   print_header
@@ -154,7 +157,23 @@ def view_by_cohort
       end
     end
   print_footer
+end
 
+def delete_a_student
+  puts "Please enter the ID of the student you would like to delete".light_yellow
+  student_to_delete = STDIN.gets.chomp
+
+  puts "Are you sure you want to delete this student? Please enter 'yes' or 'no'.".light_red
+  answer = STDIN.gets.chomp
+
+  if answer == 'yes'
+    @students.each do |student|
+      if student.object_id == student_to_delete.to_i
+        @students.delete(student)
+      end
+    end
+    puts "Student was successfully deleted from the list".light_green
+  end
 end
 
 def save_students
