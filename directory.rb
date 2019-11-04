@@ -93,19 +93,15 @@ def add_info_to_student
   if addition == 'hobby'
     puts "What is their hobby?".light_yellow
     hobby = gets.chomp
-
     @students.each do |student|
       if student.object_id == student_id.to_i
         student[:hobby] = hobby
       end
     end
-
     puts "Thankyou, their information has been added".light_green
-
   elsif addition == 'height'
     puts "What is their height?".light_yellow
     height = gets.chomp
-
     @students.each do |student|
       if student.object_id == student_id.to_i
         student[:height] = height
@@ -120,7 +116,13 @@ def save_students
   file = File.open("students.csv", "w")
   # iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    if student[:hobby] == ''
+      student[:hobby] = 'Unknown'
+    end
+    if student[:height] == ''
+      student[:height] = 'Unknown'
+    end
+    student_data = [student[:name], student[:cohort], student[:hobby], student[:height]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
@@ -130,8 +132,8 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    name, cohort, hobby, height = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym, hobby: hobby, height: height}
   end
   file.close
 end
