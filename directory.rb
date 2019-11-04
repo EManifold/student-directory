@@ -4,11 +4,10 @@ require 'colorize'
 
 def print_menu
   puts "Please select an option".white
-  puts "1. Input the students".white
+  puts "1. Load and show the list of students".white
   puts "2. Show the students".white
-  puts "3. Save the list to students.csv".white
-  puts "4. Load the list from students.csv".white
-  puts "5. Add more details to a student".white
+  puts "3. Input a new student".white
+  puts "4. Add more details to a student".white
   puts "9. Exit".white # 9 because we'll be adding more items
 end
 
@@ -22,19 +21,19 @@ end
 def process(selection)
   case selection
   when "1"
-    input_students
+    load_students
+    show_students
   when "2"
     show_students
   when "3"
-    save_students
+    input_students
   when "4"
-    load_students
-  when "5"
     add_info_to_student
   when "9"
+    save_students
     exit # this will cause the program to terminate
   else
-    puts "I don't know what you meant, try again"
+    puts "#{selection} is not a valid option, please try again".light_red
   end
 end
 
@@ -43,13 +42,18 @@ def input_students
   puts "To finish, just hit return twice"
   # get the first name
   name = STDIN.gets.chomp
+
+  puts "Please enter their cohort month"
+  cohort = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, cohort: :November, hobby: 'Unknown', height: 'Unknown'}
+    @students << {name: name, cohort: cohort, hobby: '', height: ''}
+
     puts "Now we have #{@students.count} students"
     # get another name from the user
     name = STDIN.gets.chomp
+    cohort = STDIN.gets.chomp
   end
 end
 
@@ -66,8 +70,10 @@ def print_header
 end
 
 def print_student_list
+  puts "  ".center(10).light_white + "Name".center(15).light_white + "Cohort".center(20).light_white + "Hobby".center(15).light_white + "Height".center(15).light_white + "Student ID".center(15).light_white
+  puts '-'.center(100, '-').light_white
   @students.each do |student|
-    puts "#{@students.index(student) + 1} ||".center(10).light_magenta + "#{student[:name]}".center(15).light_magenta + "#{student[:cohort]} cohort".center(20).light_magenta + "#{student[:hobby]}".center(15).light_magenta + "#{student[:height]}".center(15).light_magenta + "ID: #{student.object_id}".center(15).light_magenta
+    puts "#{@students.index(student) + 1} ||".center(10).light_magenta + "#{student[:name]}".center(15).light_magenta + "#{student[:cohort]}".center(20).light_magenta + "#{student[:hobby]}".center(15).light_magenta + "#{student[:height]}".center(15).light_magenta + "#{student.object_id}".center(15).light_magenta
   end
 end
 
